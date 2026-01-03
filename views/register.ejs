@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | Bravo Beverages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-yellow-50 flex items-center justify-center min-h-screen">
+
+<div class="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-2xl border-t-8 border-orange-500">
+    <h2 class="text-3xl font-bold text-center text-gray-800">Create an Account</h2>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <p class="text-red-500 text-center"><%= error %></p>
+    <% } %>
+
+    <form action="/register" method="POST" class="space-y-4">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" id="username" name="username" required
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+        </div>
+
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+            <input type="email" id="email" name="email" required
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" name="password" required
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+        </div>
+
+        <button type="submit"
+                class="w-full py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-600 transition">
+            Register
+        </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-600">
+        Already have an account?
+        <a href="/login" class="font-medium text-orange-500 hover:text-orange-600">Login here</a>
+    </p>
+</div>
+
+</body>
+</html>

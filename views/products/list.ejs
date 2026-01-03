@@ -1,0 +1,57 @@
+<%- include('../partials/header', { title: 'Products' }) %>
+
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-2xl font-bold">Products</h1>
+  <a href="/products/add" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">Add Product</a>
+</div>
+
+<table class="w-full mt-4 bg-white shadow rounded">
+  <thead>
+    <tr class="bg-gray-200">
+      <th class="p-2 text-left">Name</th>
+      <th class="p-2 text-left">Price</th>
+      <th class="p-2 text-left">Category</th>
+      <th class="p-2 text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(p => { %>
+      <tr id="product-<%= p.Product_ID %>" class="border-b">
+        <td class="p-2"><%= p.Name %></td>
+        <td class="p-2">$<%= Number(p.Price).toFixed(2) %></td>
+        <td class="p-2"><%= p.Category_Name || '—' %></td>
+        <td class="p-2 text-center space-x-3">
+          <a href="/products/edit/<%= p.Product_ID %>" class="text-blue-600 hover:text-blue-800 text-xl" title="Edit">
+            &#9998;
+          </a>
+          <button class="text-red-600 hover:text-red-800 delete-product text-xl" data-id="<%= p.Product_ID %>" title="Delete">
+            &#128465;
+          </button>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<script>
+  document.querySelectorAll('.delete-product').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      // Using currentTarget to ensure we get the button's data-id
+      const productId = e.currentTarget.dataset.id;
+      if (!confirm('Are you sure?')) return;
+
+      try {
+        const response = await fetch(`/products/delete/${productId}`, { method: 'DELETE' });
+        if (response.ok) {
+          document.getElementById(`product-${productId}`).remove();
+        } else {
+          alert('Failed to delete.');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,56 @@
+<%- include('./partials/header', { title: 'Contacts List' }) %>
+
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-2xl font-bold">📧 Contact Messages</h1>
+  <span class="badge bg-primary fs-6"><%= contacts.length %> Messages</span>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="w-full bg-white shadow rounded">
+    <thead>
+      <tr class="bg-gray-200 text-left">
+        <th class="p-2">#ID</th>
+        <th class="p-2">Customer</th>
+        <th class="p-2">Message Preview</th>
+        <th class="p-2">Date</th>
+        <th class="p-2 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(contacts.length > 0) { %>
+        <% contacts.forEach(contact => { %>
+          <tr id="contact-<%= contact.contanct_id %>" class="border-b hover:bg-gray-50">
+            <td class="p-2 fw-bold text-primary">#<%= contact.contanct_id %></td>
+            <td class="p-2">
+              <%= contact.contact_name %><br>
+              <small class="text-muted"><%= contact.contact_email %></small>
+            </td>
+            <td class="p-2">
+              <div title="<%= contact.message %>" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <%= contact.message.substring(0, 50) %>...
+              </div>
+            </td>
+            <td class="p-2">
+              <%= new Date(contact.date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
+            </td>
+            <td class="p-2 text-center">
+              <a href="mailto:<%= contact.contact_email %>?subject=Re: <%= contact.contact_name %> Inquiry" 
+                 class="text-blue-600 hover:text-blue-800 text-xl" title="Reply">
+                ✉️
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="5" class="text-center text-gray-500 py-8">
+            <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+            No contact messages yet
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('./partials/footer') %>
